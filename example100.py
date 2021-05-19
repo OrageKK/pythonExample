@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 import copy
 import time
+import datetime
 
 # arr[] --> 排序数组
 # low  --> 起始索引
@@ -303,6 +304,87 @@ class Example:
                     print ('') #每10位输出一个换行
             leap = 1 # 还原标志位
         print ('The total is %d' % h)
+
+    # 实例13
+    """
+    题目：打印出所有的"水仙花数"，所谓"水仙花数"是指一个三位数，其各位数字立方和等于该数本身。例如：153是一个"水仙花数"，因为153=1的三次方＋5的三次方＋3的三次方。
+    程序分析：利用for循环控制100-999个数，每个数分解出个位，十位，百位。
+    """
+    def ex13(self):
+        for n in range(100,1000): #找到所有三位数
+            i = n // 100    # 百位 （// 整除）
+            j = n // 10 % 10 # 十位
+            k = n % 10 # 个位
+            if n == i*i*i + j*j*j + k*k*k: #如果个位的立方+十位的立方+百位的立方 = 这个数，那他就是水仙花数
+                print(n)
+
+    # 实例14
+    """
+    题目：将一个正整数分解质因数。例如：输入90,打印出90=2*3*3*5。
+
+    程序分析：对n进行分解质因数，应先找到一个最小的质数k，然后按下述步骤完成：
+    (1)如果这个质数恰等于n，则说明分解质因数的过程已经结束，打印出即可。
+    (2)如果n<>k，但n能被k整除，则应打印出k的值，并用n除以k的商,作为新的正整数你n,重复执行第一步。
+    (3)如果n不能被k整除，则用k+1作为k的值,重复执行第一步。
+    """
+    def ex14(self):
+        n = int(input('请输入一个数字:'))
+        print ('{} = '.format(n), end=" ")
+        if not isinstance(n, int) or n <= 0 : #判断是否输入合规为int
+            print ('请输入一个正确的数字 !')
+            exit(0)
+        elif n in [1] : # 判断n 是否为1
+            print ('{}'.format(n))
+        while n not in [1] : # 循环保证递归
+            for index in range(2, n + 1) :
+                if n % index == 0:
+                    n //= index # n 等于 n//index
+                    if n == 1: 
+                        print (index )
+                    else : # index 一定是素数
+                        print ('{} *'.format(index), end=" ")
+                    break
+
+
+    # 实例15
+    """
+    题目：利用条件运算符的嵌套来完成此题：学习成绩>=90分的同学用A表示，60-89分之间的用B表示，60分以下的用C表示。
+    程序分析：程序分析：(a>b) ? a:b 这是条件运算符的基本例子。
+    """
+    def ex15(self):
+        score = int(input('请输入分数:\n'))
+        if score >= 90:
+            level = 'A'
+        elif score >= 60:
+            level = 'B'
+        else:
+            level = 'C'
+        
+        print ('%d 等级为 %s' % (score,level))
+
+    # 实例16
+    """
+    题目：输出指定格式的日期。
+    程序分析：使用 datetime 模块。
+    """
+    def ex16(self):
+        # 输出今日日期，格式为 dd/mm/yyyy。更多选项可以查看 strftime() 方法
+        print(datetime.date.today().strftime('%d/%m/%Y'))
+    
+        # 创建日期对象
+        miyazakiBirthDate = datetime.date(1941, 1, 5)
+    
+        print(miyazakiBirthDate.strftime('%d/%m/%Y'))
+    
+        # 日期算术运算
+        miyazakiBirthNextDay = miyazakiBirthDate + datetime.timedelta(days=1)
+    
+        print(miyazakiBirthNextDay.strftime('%d/%m/%Y'))
+    
+        # 日期替换
+        miyazakiFirstBirthday = miyazakiBirthDate.replace(year=miyazakiBirthDate.year + 1)
+    
+        print(miyazakiFirstBirthday.strftime('%d/%m/%Y'))
 e = Example()
 # print(e.ex6(10))
-e.ex12()
+e.ex16()
